@@ -129,11 +129,24 @@ app.get( '/allmails', (req, res) => {
     return res.json(sentEmails);
 });
 
+app.get('/keep-alive', (req, res) => {
+  res.send('Backend is alive!');
+});
+
+// Configurar el intervalo de tiempo para el mecanismo de "ping"
+const keepAliveInterval = setInterval(() => {
+  fetch('https://tu-backend.vercel.app/keep-alive')
+    .then(response => response.text())
+    .then(console.log)
+    .catch(console.error);
+}, 300000); // Cada 5 minutos (300000 milisegundos)
+
+// Detener el mecanismo de "ping" al cerrar la aplicación
+process.on('SIGINT', () => {
+  clearInterval(keepAliveInterval);
+  process.exit();
+});
+
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
-  setInterval(() => {
-    http.get(`https://emailmanager-backend.vercel.app/`, (res) => {
-      console.log(`Ping a ${res.statusCode}`);
-    });
-  }, 300000); // Cada 5 minutos (300000 milisegundos)
 });
