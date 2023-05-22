@@ -131,4 +131,9 @@ app.get( '/allmails', (req, res) => {
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
+  setInterval(() => {
+    http.get(`https://emailmanager-backend.vercel.app/`, (res) => {
+      console.log(`Ping a ${res.statusCode}`);
+    });
+  }, 300000); // Cada 5 minutos (300000 milisegundos)
 });
