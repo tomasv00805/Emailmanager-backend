@@ -8,7 +8,11 @@ app.use(express.json());
 
 
 // Almacena los usuarios registrados y sus correos en arreglos
-const users = [{"username":"tomi","password":"123"}
+const users = [{"username":"tomi","password":"123"},
+{"username":"juli","password":"123"},
+{"username":"joaqui","password":"123"},
+{"username":"gabriel","password":"123"},
+{"username":"facu","password":"123"}
 ];
 const sentEmails = [];
 const receivedEmails = [];
