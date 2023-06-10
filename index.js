@@ -1,5 +1,6 @@
 import express from 'express'
 import cors from 'cors'
+import user from '../class/user.js'
 const app = express()
 const port = process.env.PORT || 3000
 app.use(cors())
