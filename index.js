@@ -1,6 +1,5 @@
 import express from 'express'
 import cors from 'cors'
-const User = require('./class/User');
 const app = express()
 const port = process.env.PORT || 3000
 app.use(cors())
