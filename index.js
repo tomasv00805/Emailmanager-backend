@@ -108,7 +108,7 @@ app.get('/inbox/:username', (req, res) => {
     return res.status(401).json({ error: 'Usuario no registrado' })
   }
 
-  const inbox = receivedEmails.filter((email) => email.to.includes(username))
+  const inbox = receivedEmails.filter((email) => email.to.includes(user.username))
 
   return res.json(inbox)
 })
