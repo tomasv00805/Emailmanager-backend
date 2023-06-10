@@ -44,14 +44,14 @@ app.post('/register', (req, res) => {
 
 // Ruta de login de usuario
 app.post('/login', (req, res) => {
-  const { identifier, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!identifier || !password) {
+  if (!username || !password) {
     return res.status(400).json({ error: 'Todos los campos son obligatorios' });
   }
 
   const user = users.find(
-    user => user.username === identifier || user.email === identifier
+    user => user.username === username || user.email === username
   );
 
   if (!user || user.password !== password) {
