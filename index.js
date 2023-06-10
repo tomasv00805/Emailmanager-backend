@@ -102,7 +102,7 @@ app.get('/inbox/:username', (req, res) => {
     return res.status(400).json({ error: 'Todos los campos son obligatorios' })
   }
 
-  const user = users.find((user) => user.username === username)
+  const user = users.find((user) => user.username === username || user.email === username)
 
   if (!user) {
     return res.status(401).json({ error: 'Usuario no registrado' })
