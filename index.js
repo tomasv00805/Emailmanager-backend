@@ -1,6 +1,6 @@
 import express from 'express'
 import cors from 'cors'
-import Mail from "./class/Mail.js"
+import Mail from './class/Mail.js'
 import User from './class/User.js'
 const app = express()
 const port = process.env.PORT || 3000
