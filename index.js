@@ -5,8 +5,7 @@ const port = process.env.PORT || 3000
 app.use(cors())
 
 app.use(express.json())
-import Mail from "./class/Mail.js"
-import User from './class/User.js'
+
 // Almacena los usuarios registrados y sus correos en arreglos
 const users = [
   { username: 'tomi', password: '123' },
