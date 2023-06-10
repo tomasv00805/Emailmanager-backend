@@ -1,7 +1,7 @@
-import express from 'express';
-import cors from 'cors';
-const app = express();
-const port = process.env.PORT || 3000;
+import express from 'express'
+import cors from 'cors'
+const app = express()
+const port = process.env.PORT || 3000
 app.use(cors())
 
 app.use(express.json())
@@ -34,7 +34,7 @@ app.post('/register', (req, res) => {
   const newUser = {
     username,
     password
-  };
+  }
 
   users.push(newUser)
 
@@ -60,34 +60,33 @@ app.post('/login', (req, res) => {
 
 // Ruta para enviar un correo
 app.post('/send', (req, res) => {
-    const { from, to, subject, body } = req.body;
-    
-    if (!from || !to || !subject || !body) {
-        return res.status(400).json({ error: 'Todos los campos son obligatorios' });
-    }
-    const recipients = to.split(' ');
-    //recorrer arreglo recipients para verificar que todos los usuarios existen
-    const allRecipientsExist = recipients.every(recipient =>
-      users.some(user => user.username === recipient)
-    );
-    
-    if (!allRecipientsExist) {
-        return res.status(401).json({ error: 'Usuario no registrado' });
-    }
-    
-    const newEmail = {
-        from,
-        to: recipients,
-        subject,
-        body
-    };
-    
-    sentEmails.push(newEmail);
-    receivedEmails.push(newEmail);
-    
-    return res.json({ message: 'Correo enviado' });
-  
-});
+  const { from, to, subject, body } = req.body
+
+  if (!from || !to || !subject || !body) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' })
+  }
+  const recipients = to.split(' ')
+  // recorrer arreglo recipients para verificar que todos los usuarios existen
+  const allRecipientsExist = recipients.every((recipient) =>
+    users.some((user) => user.username === recipient)
+  )
+
+  if (!allRecipientsExist) {
+    return res.status(401).json({ error: 'Usuario no registrado' })
+  }
+
+  const newEmail = {
+    from,
+    to: recipients,
+    subject,
+    body
+  }
+
+  sentEmails.push(newEmail)
+  receivedEmails.push(newEmail)
+
+  return res.json({ message: 'Correo enviado' })
+})
 
 // Ruta para obtener la bandeja de entrada de un usuario
 app.get('/inbox/:username', (req, res) => {
@@ -130,7 +129,6 @@ app.get('/sent/:username', (req, res) => {
 app.get('/allmails', (req, res) => {
   return res.json(sentEmails)
 })
-
 
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`)
