@@ -8,55 +8,58 @@ app.use(express.json())
 
 // Almacena los usuarios registrados y sus correos en arreglos
 const users = [
-  { username: 'tomi', password: '123' },
-  { username: 'juli', password: '123' },
-  { username: 'joaqui', password: '123' },
-  { username: 'gabriel', password: '123' },
-  { username: 'facu', password: '123' }
+  { username: 'tomi', email: "tomi@mail.com", password: '123' },
+  { username: 'juli', email: "juli@mail.com",password: '123' },
+  { username: 'joaqui', email: "joaqui@mail.com",password: '123' },
+  { username: 'gabriel',email: "gabriel@mail.com" , password: '123' },
+  { username: 'facu', email: "facu@mail.com",password: '123' }
 ]
 const sentEmails = []
 const receivedEmails = []
 
 // Ruta de registro de usuario
 app.post('/register', (req, res) => {
-  const { username, password } = req.body
+  const { username, email, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' })
+  if (!username || !email || !password) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
   }
 
-  const existingUser = users.find((user) => user.username === username)
+  const existingUser = users.find((user) => user.username === username || user.email === email);
 
   if (existingUser) {
-    return res.status(409).json({ error: 'El usuario ya existe' })
+    return res.status(409).json({ error: 'El usuario ya existe' });
   }
 
   const newUser = {
     username,
+    email,
     password
-  }
+  };
 
-  users.push(newUser)
+  users.push(newUser);
 
-  return res.json({ message: 'Registro exitoso' })
-})
+  return res.json({ message: 'Registro exitoso' });
+});
 
 // Ruta de login de usuario
 app.post('/login', (req, res) => {
-  const { username, password } = req.body
+  const { identifier, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: 'Todos los campos son obligatorios' })
+  if (!identifier || !password) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
   }
 
-  const user = users.find((user) => user.username === username)
+  const user = users.find(
+    user => user.username === identifier || user.email === identifier
+  );
 
   if (!user || user.password !== password) {
-    return res.status(401).json({ error: 'Usuario o contraseña incorrectos' })
+    return res.status(401).json({ error: 'Usuario o contraseña incorrectos' });
   }
 
-  return res.json({ message: 'Inicio de sesión exitoso' })
-})
+  return res.json({ message: 'Inicio de sesión exitoso' });
+});
 
 // Ruta para enviar un correo
 app.post('/send', (req, res) => {
