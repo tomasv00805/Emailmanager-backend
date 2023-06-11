@@ -150,7 +150,7 @@ app.post('/favorite/:username', (req, res) => {
   }
 
   const user = users.find((user) => user.username === username || user.email === username);
-
+  
   if (!user) {
     return res.status(401).json({ error: 'Usuario no registrado' });
   }
@@ -165,7 +165,7 @@ app.post('/favorite/:username', (req, res) => {
     return res.status(409).json({ error: 'El correo ya está en favoritos' });
   }
 
-  user.fav.push(email);
+  user.fav.push(emailId);
 
   return res.json({ message: 'Correo agregado a favoritos' });
 });
