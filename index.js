@@ -155,7 +155,7 @@ app.post('/favorite/:username', (req, res) => {
     return res.status(401).json({ error: 'Usuario no registrado' });
   }
 
-  const email = sentEmails.find((email) => email.id == emailId);
+  const email = sentEmails.find((email) => email.id === emailId);
 
   if (!email) {
     return res.status(404).json({ error: 'Correo no encontrado' });
