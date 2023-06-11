@@ -8,11 +8,11 @@ app.use(express.json())
 
 // Almacena los usuarios registrados y sus correos en arreglos
 const users = [
-  { username: 'tomi', email: "tomi@mail.com", password: '123',faven:[],favre:[] },
-  { username: 'juli', email: "juli@mail.com",password: '123', faven:[],favre:[] },
-  { username: 'joaqui', email: "joaqui@mail.com",password: '123', faven:[],favre:[] },
-  { username: 'gabriel',email: "gabriel@mail.com" , password: '123', faven:[],favre:[] },
-  { username: 'facu', email: "facu@mail.com",password: '123', faven:[],favre:[] }
+  { username: 'tomi', email: "tomi@mail.com", password: '123',fav:[]},
+  { username: 'juli', email: "juli@mail.com",password: '123', fav:[]},
+  { username: 'joaqui', email: "joaqui@mail.com",password: '123', fav:[]},
+  { username: 'gabriel',email: "gabriel@mail.com" , password: '123', fav:[]},
+  { username: 'facu', email: "facu@mail.com",password: '123', fav:[] }
 ]
 const sentEmails = []
 const receivedEmails = []
@@ -170,7 +170,7 @@ app.post('/favorite/:username', (req, res) => {
   return res.json({ message: 'Correo agregado a favoritos' });
 });
 // Ruta para obtener la lista de correos favoritos de un usuario
-app.get('/favorites/:username', (req, res) => {
+app.get('/favorite/:username', (req, res) => {
   const { username } = req.params;
 
   if (!username) {
@@ -186,6 +186,36 @@ app.get('/favorites/:username', (req, res) => {
   const favoriteEmails = sentEmails.filter((email) => user.fav.includes(email.id));
 
   return res.json(favoriteEmails);
+});
+
+// Ruta para eliminar un correo de la lista de favoritos de un usuario
+app.delete('/favorite/:username', (req, res) => {
+  const { username } = req.params;
+  const { emailId } = req.body;
+
+  if (!username || !emailId) {
+    return res.status(400).json({ error: 'Todos los campos son obligatorios' });
+  }
+
+  const user = users.find((user) => user.username === username || user.email === username);
+
+  if (!user) {
+    return res.status(401).json({ error: 'Usuario no registrado' });
+  }
+
+  const email = sentEmails.find((email) => email.id === emailId);
+
+  if (!email) {
+    return res.status(404).json({ error: 'Correo no encontrado' });
+  }
+
+  if (!user.fav.includes(emailId)) {
+    return res.status(409).json({ error: 'El correo no está en favoritos' });
+  }
+
+  user.fav = user.fav.filter((favEmailId) => favEmailId !== emailId);
+
+  return res.json({ message: 'Correo eliminado de favoritos' });
 });
 
 
