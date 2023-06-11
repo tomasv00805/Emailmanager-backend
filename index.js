@@ -165,7 +165,7 @@ app.post('/favorite/:username', (req, res) => {
     return res.status(409).json({ error: 'El correo ya está en favoritos' });
   }
 
-  user.fav.push(emailId);
+  user.fav.push(email);
 
   return res.json({ message: 'Correo agregado a favoritos' });
 });
