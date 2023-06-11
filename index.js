@@ -11,7 +11,7 @@ const users = [
   { username: 'tomi', email: "tomi@mail.com", password: '123',fav:[]},
   { username: 'juli', email: "juli@mail.com",password: '123', fav:[]},
   { username: 'joaqui', email: "joaqui@mail.com",password: '123', fav:[]},
-  { username: 'gabriel',email: "gabriel@mail.com" , password: '123', fav:[]},
+  { username: 'gabriel',email: "gabriel@mail.com" , password: '123', fav:[]}, 
   { username: 'facu', email: "facu@mail.com",password: '123', fav:[] }
 ]
 const sentEmails = []
