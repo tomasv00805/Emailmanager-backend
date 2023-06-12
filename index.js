@@ -17,6 +17,7 @@ const users = [
 const sentEmails = []
 const receivedEmails = []
 
+
 // Ruta de registro de usuario
 app.post('/register', (req, res) => {
   const { username, email, password } = req.body;
